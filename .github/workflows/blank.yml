@@ -1,0 +1,33 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on pushes to the main branch
+
+jobs:
+  run-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set Up Node.js (Example)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Replace with your required version
+
+      - name: Install Dependencies
+        run: npm install # Adjust for your project, e.g., pip install for Python
+
+      - name: Run Tests
+        run: npm test # Replace with your testing command
+
+      - name: Display CI Success Message
+        run: |
+          echo "----------------------------------"
+          echo "✅ CI Workflow ran successfully!"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Pushed by: ${{ github.actor }}"
+          echo "----------------------------------"
