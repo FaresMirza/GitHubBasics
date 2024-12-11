@@ -12,14 +12,31 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Ensures all files and history are fetched
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '23.3.0' # Use your specific Node.js version
 
+      - name: Verify Files
+        run: ls -la # Debug step to check the current directory structure
+
       - name: Install Dependencies
-        run: npm install
+        working-directory: ./ # Replace './' with your subdirectory if needed
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            echo "Error: package.json not found" && exit 1
+          fi
 
       - name: Run the Application
-        run: npm start
+        working-directory: ./ # Replace './' with your subdirectory if needed
+        run: |
+          if [ -f package.json ]; then
+            npm start
+          else
+            echo "Error: package.json not found" && exit 1
+          fi
