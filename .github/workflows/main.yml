@@ -1,0 +1,25 @@
+name: CI Workflow
+
+on:
+  push: # Trigger the workflow on every commit
+    branches:
+      - "**" # Matches commits to all branches
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '23.3.0' # Use your specific Node.js version
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run the Application
+        run: npm start
